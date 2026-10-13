@@ -1,3 +1,4 @@
+
 (() => {
   "use strict";
 
@@ -40,6 +41,7 @@ You deserve a beautiful life filled with love, laughter, and magic. Today is all
   const music = $("music");
   const soundButton = $("soundToggle");
   const heartCanvas = $("heartCanvas");
+
   const reducedMotion = window.matchMedia(
     "(prefers-reduced-motion: reduce)"
   ).matches;
@@ -74,8 +76,13 @@ You deserve a beautiful life filled with love, laughter, and magic. Today is all
 
   function setSoundLabel(on) {
     if (!soundButton) return;
+
     const label = soundButton.querySelector("small");
-    if (label) label.textContent = on ? "SOUND ON" : "SOUND OFF";
+
+    if (label) {
+      label.textContent = on ? "SOUND ON" : "SOUND OFF";
+    }
+
     soundButton.setAttribute("aria-pressed", String(on));
   }
 
@@ -106,6 +113,7 @@ You deserve a beautiful life filled with love, laughter, and magic. Today is all
 
   function fadeVolume(target, duration) {
     cancelCurrentFade();
+
     if (!music) return Promise.resolve();
 
     const startVolume = music.volume;
@@ -122,8 +130,13 @@ You deserve a beautiful life filled with love, laughter, and magic. Today is all
 
       function finish() {
         if (finished) return;
+
         finished = true;
-        if (cancelFade === finish) cancelFade = null;
+
+        if (cancelFade === finish) {
+          cancelFade = null;
+        }
+
         resolve();
       }
 
@@ -132,12 +145,19 @@ You deserve a beautiful life filled with love, laughter, and magic. Today is all
       function step(now) {
         if (finished) return;
 
-        const progress = Math.min(1, (now - started) / duration);
+        const progress = Math.min(
+          1,
+          (now - started) / duration
+        );
+
         const eased = progress * progress * (3 - 2 * progress);
 
         music.volume = Math.max(
           0,
-          Math.min(1, startVolume + (target - startVolume) * eased)
+          Math.min(
+            1,
+            startVolume + (target - startVolume) * eased
+          )
         );
 
         if (progress < 1) {
@@ -158,6 +178,7 @@ You deserve a beautiful life filled with love, laughter, and magic. Today is all
 
     const track = desiredTrack;
     const filename = CONFIG.songs[track];
+
     if (!filename) return;
 
     const token = ++switchToken;
@@ -166,7 +187,9 @@ You deserve a beautiful life filled with love, laughter, and magic. Today is all
       currentTrack === track &&
       !music.paused &&
       music.getAttribute("src") === filename
-    ) return;
+    ) {
+      return;
+    }
 
     if (!music.paused && currentTrack) {
       await fadeVolume(0, 650);
@@ -191,6 +214,7 @@ You deserve a beautiful life filled with love, laughter, and magic. Today is all
 
       musicUnlocked = true;
       setSoundLabel(true);
+
       await fadeVolume(0.72, 1100);
     } catch (error) {
       console.info("Music needs a visitor interaction:", error);
@@ -200,9 +224,11 @@ You deserve a beautiful life filled with love, laughter, and magic. Today is all
 
   function enableMusic() {
     if (!music) return;
+
     musicEnabled = true;
     musicUnlocked = true;
     setSoundLabel(true);
+
     playTrack();
   }
 
@@ -212,6 +238,7 @@ You deserve a beautiful life filled with love, laughter, and magic. Today is all
     musicEnabled = false;
     ++switchToken;
     setSoundLabel(false);
+
     await fadeVolume(0, 300);
 
     if (!musicEnabled) {
@@ -221,15 +248,21 @@ You deserve a beautiful life filled with love, laughter, and magic. Today is all
   }
 
   function toggleMusic() {
-    if (musicEnabled) disableMusic();
-    else enableMusic();
+    if (musicEnabled) {
+      disableMusic();
+    } else {
+      enableMusic();
+    }
   }
 
   function chooseTrack(track) {
     if (!CONFIG.songs[track] || desiredTrack === track) return;
 
     desiredTrack = track;
-    if (musicEnabled && musicUnlocked) playTrack();
+
+    if (musicEnabled && musicUnlocked) {
+      playTrack();
+    }
   }
 
   function getTrackForScroll() {
@@ -240,8 +273,13 @@ You deserve a beautiful life filled with love, laughter, and magic. Today is all
 
     const marker = window.innerHeight * 0.45;
 
-    if (memories.getBoundingClientRect().top <= marker) return "memories";
-    if (cake.getBoundingClientRect().top <= marker) return "cake";
+    if (memories.getBoundingClientRect().top <= marker) {
+      return "memories";
+    }
+
+    if (cake.getBoundingClientRect().top <= marker) {
+      return "cake";
+    }
 
     return "opening";
   }
@@ -285,10 +323,12 @@ You deserve a beautiful life filled with love, laughter, and magic. Today is all
     let height = 0;
     let particles = [];
     let sparkles = [];
+
     const startedAt = performance.now();
 
     function heartPoint(t, scale) {
       const x = 16 * Math.pow(Math.sin(t), 3);
+
       const y =
         13 * Math.cos(t) -
         5 * Math.cos(2 * t) -
@@ -310,6 +350,7 @@ You deserve a beautiful life filled with love, laughter, and magic. Today is all
 
       canvas.width = Math.round(width * ratio);
       canvas.height = Math.round(height * ratio);
+
       ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
 
       const scale = Math.min(width / 36, height / 34) * 0.88;
@@ -346,9 +387,13 @@ You deserve a beautiful life filled with love, laughter, and magic. Today is all
       ctx.clearRect(0, 0, width, height);
 
       const elapsed = (now - startedAt) / 1000;
+
       const formation = reducedMotion
         ? 1
-        : Math.min(1, Math.max(0, (elapsed - 0.25) / 2.6));
+        : Math.min(
+          1,
+          Math.max(0, (elapsed - 0.25) / 2.6)
+        );
 
       const eased = formation * formation * (3 - 2 * formation);
       const pulse = 1 + Math.sin(now * 0.0017) * 0.018;
@@ -356,7 +401,10 @@ You deserve a beautiful life filled with love, laughter, and magic. Today is all
       particles.forEach(particle => {
         const localProgress = Math.max(
           0,
-          Math.min(1, (formation - particle.delay * 0.35) / 0.65)
+          Math.min(
+            1,
+            (formation - particle.delay * 0.35) / 0.65
+          )
         );
 
         const localEased =
@@ -374,8 +422,11 @@ You deserve a beautiful life filled with love, laughter, and magic. Today is all
         const drift = (1 - eased) *
           Math.sin(now * 0.0008 + particle.phase) * 5;
 
-        const drawX = width / 2 + (x - width / 2) * pulse + drift;
-        const drawY = height / 2 + (y - height / 2) * pulse;
+        const drawX = width / 2 +
+          (x - width / 2) * pulse + drift;
+
+        const drawY = height / 2 +
+          (y - height / 2) * pulse;
 
         const hue = particle.hue > 0.84
           ? "255, 224, 166"
@@ -385,9 +436,11 @@ You deserve a beautiful life filled with love, laughter, and magic. Today is all
 
         ctx.beginPath();
         ctx.arc(drawX, drawY, particle.size, 0, Math.PI * 2);
+
         ctx.fillStyle = `rgba(${hue}, ${shimmer})`;
         ctx.shadowBlur = particle.size * 5;
         ctx.shadowColor = `rgba(${hue}, 0.7)`;
+
         ctx.fill();
       });
 
@@ -397,7 +450,9 @@ You deserve a beautiful life filled with love, laughter, and magic. Today is all
         const angle = sparkle.angle +
           (reducedMotion ? 0 : now * 0.00012);
 
-        const radius = Math.min(width, height) * sparkle.radius * 0.45;
+        const radius = Math.min(width, height) *
+          sparkle.radius * 0.45;
+
         const x = width / 2 + Math.cos(angle) * radius;
         const y = height / 2 + Math.sin(angle) * radius;
 
@@ -415,6 +470,7 @@ You deserve a beautiful life filled with love, laughter, and magic. Today is all
 
     resize();
     requestAnimationFrame(draw);
+
     window.addEventListener("resize", resize, { passive: true });
   }
 
@@ -436,8 +492,10 @@ You deserve a beautiful life filled with love, laughter, and magic. Today is all
 
       width = window.innerWidth;
       height = window.innerHeight;
+
       canvas.width = Math.round(width * ratio);
       canvas.height = Math.round(height * ratio);
+
       ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
 
       const count = Math.min(
@@ -472,6 +530,7 @@ You deserve a beautiful life filled with love, laughter, and magic. Today is all
 
     resize();
     requestAnimationFrame(draw);
+
     window.addEventListener("resize", resize, { passive: true });
   }
 
@@ -479,9 +538,11 @@ You deserve a beautiful life filled with love, laughter, and magic. Today is all
 
   function addCursorHeart(x, y, mobile = false) {
     const container = $("hearts");
+
     if (!container || reducedMotion) return;
 
     const heart = document.createElement("span");
+
     heart.className = "cursor-heart";
     heart.textContent = Math.random() > 0.25 ? "♡" : "♥";
     heart.style.left = `${x}px`;
@@ -492,11 +553,24 @@ You deserve a beautiful life filled with love, laughter, and magic. Today is all
       : 10 + Math.random() * 9;
 
     heart.style.fontSize = `${size}px`;
-    heart.style.setProperty("--drift", `${(Math.random() - 0.5) * 34}px`);
-    heart.style.setProperty("--rise", `${28 + Math.random() * 35}px`);
-    heart.style.setProperty("--turn", `${(Math.random() - 0.5) * 40}deg`);
+
+    heart.style.setProperty(
+      "--drift",
+      `${(Math.random() - 0.5) * 34}px`
+    );
+
+    heart.style.setProperty(
+      "--rise",
+      `${28 + Math.random() * 35}px`
+    );
+
+    heart.style.setProperty(
+      "--turn",
+      `${(Math.random() - 0.5) * 40}deg`
+    );
 
     container.appendChild(heart);
+
     setTimeout(() => heart.remove(), 1500);
   }
 
@@ -505,6 +579,7 @@ You deserve a beautiful life filled with love, laughter, and magic. Today is all
       if (event.pointerType !== "mouse") return;
 
       const now = performance.now();
+
       const distance = Math.hypot(
         event.clientX - cursorLastX,
         event.clientY - cursorLastY
@@ -515,6 +590,7 @@ You deserve a beautiful life filled with love, laughter, and magic. Today is all
       cursorLastTime = now;
       cursorLastX = event.clientX;
       cursorLastY = event.clientY;
+
       addCursorHeart(event.clientX, event.clientY);
     }, { passive: true });
 
@@ -537,29 +613,44 @@ You deserve a beautiful life filled with love, laughter, and magic. Today is all
 
   function createHeartBurst(amount = 12) {
     const container = $("hearts");
+
     if (!container || reducedMotion) return;
 
     const symbols = ["♡", "♥", "✧", "✦"];
 
     for (let i = 0; i < amount; i++) {
       const heart = document.createElement("span");
+
       heart.className = "float-heart";
+
       heart.textContent = symbols[
         Math.floor(Math.random() * symbols.length)
       ];
+
       heart.style.left = `${Math.random() * 100}%`;
-      heart.style.setProperty("--dur", `${3.5 + Math.random() * 2.5}s`);
-      heart.style.setProperty("--drift", `${(Math.random() - 0.5) * 100}px`);
+
+      heart.style.setProperty(
+        "--dur",
+        `${3.5 + Math.random() * 2.5}s`
+      );
+
+      heart.style.setProperty(
+        "--drift",
+        `${(Math.random() - 0.5) * 100}px`
+      );
+
       heart.style.fontSize = `${12 + Math.random() * 16}px`;
       heart.style.animationDelay = `${Math.random() * 0.5}s`;
 
       container.appendChild(heart);
+
       setTimeout(() => heart.remove(), 7500);
     }
   }
 
   function startFloatingHearts() {
     if (reducedMotion || heartTimer) return;
+
     heartTimer = setInterval(() => createHeartBurst(1), 1600);
   }
 
@@ -583,6 +674,7 @@ You deserve a beautiful life filled with love, laughter, and magic. Today is all
       if (index >= CONFIG.letter.length) return;
 
       target.textContent += CONFIG.letter[index];
+
       const character = CONFIG.letter[index];
       index++;
 
@@ -602,6 +694,7 @@ You deserve a beautiful life filled with love, laughter, and magic. Today is all
     if (opened) return;
 
     opened = true;
+
     $("envelope")?.classList.add("open");
 
     const note = $("letterNote");
@@ -631,14 +724,17 @@ You deserve a beautiful life filled with love, laughter, and magic. Today is all
     });
 
     const wish = $("wish");
+
     if (wish) {
-      wish.textContent = "Your wish is on its way to the universe. ✨";
+      wish.textContent =
+        "Your wish is on its way to the universe. ✨";
     }
 
     const birthday = $("birthday");
 
     if (birthday) {
       birthday.setAttribute("aria-hidden", "false");
+
       setTimeout(
         () => birthday.classList.add("visible"),
         reducedMotion ? 0 : 450
@@ -646,6 +742,7 @@ You deserve a beautiful life filled with love, laughter, and magic. Today is all
     }
 
     $("cake")?.classList.add("celebrating");
+
     createHeartBurst(28);
   }
 
@@ -659,11 +756,14 @@ You deserve a beautiful life filled with love, laughter, and magic. Today is all
         note.textContent =
           "Microphone unavailable here. The wish button still works! ♡";
       }
+
       return;
     }
 
     try {
-      micStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      micStream = await navigator.mediaDevices.getUserMedia({
+        audio: true
+      });
 
       const AudioContextClass =
         window.AudioContext || window.webkitAudioContext;
@@ -680,6 +780,7 @@ You deserve a beautiful life filled with love, laughter, and magic. Today is all
 
       const source = audioContext.createMediaStreamSource(micStream);
       const analyser = audioContext.createAnalyser();
+
       analyser.fftSize = 1024;
       source.connect(analyser);
 
@@ -747,7 +848,7 @@ You deserve a beautiful life filled with love, laughter, and magic. Today is all
     }
   }
 
-  /* PHOTO GALLERY — FIXED ❤️ */
+  /* PHOTO GALLERY + PHONE BACK BUTTON FIX 📱 */
 
   function buildGallery() {
     const gallery = $("gallery");
@@ -798,6 +899,7 @@ You deserve a beautiful life filled with love, laughter, and magic. Today is all
                 ${escapeHTML(memories[0][2])}
               </span>
             </div>
+
             <p class="featured-description">
               ${escapeHTML(memories[0][1])}
             </p>
@@ -843,17 +945,24 @@ You deserve a beautiful life filled with love, laughter, and magic. Today is all
         <div class="memory-portal" aria-hidden="true">
           <button class="portal-close" type="button"
             aria-label="Close memory">×</button>
+
           <div class="portal-backdrop"></div>
+
           <div class="portal-content" role="dialog"
             aria-modal="true" aria-label="Memory detail">
+
             <span class="portal-detail-eyebrow">A MEMORY TO KEEP</span>
+
             <div class="portal-detail-photo">
               <img src="" alt="">
             </div>
+
             <span class="portal-detail-number"></span>
             <h3 class="portal-detail-title"></h3>
             <p class="portal-detail-caption"></p>
+
             <div class="portal-detail-hearts" aria-hidden="true">♡ ✦ ♡</div>
+
             <div class="portal-navigation">
               <button class="portal-prev" type="button">← Previous</button>
               <button class="portal-next" type="button">Next memory →</button>
@@ -871,14 +980,32 @@ You deserve a beautiful life filled with love, laughter, and magic. Today is all
 
     let activeIndex = 0;
     let previousFocus = null;
+    let portalHistoryActive = false;
 
     function openMemory(index) {
       if (!memories.length) return;
 
+      /*
+       * Add a history entry only when opening the gallery overlay.
+       * The phone's Back button can then close the overlay first.
+       */
+      if (!portal.classList.contains("is-open")) {
+        window.history.pushState(
+          { ruhitaMemoryPortal: true },
+          "",
+          window.location.href
+        );
+
+        portalHistoryActive = true;
+      }
+
       activeIndex = (index + memories.length) % memories.length;
+
       const memory = memories[activeIndex];
 
-      previousFocus = document.activeElement;
+      if (!portal.classList.contains("is-open")) {
+        previousFocus = document.activeElement;
+      }
 
       detailImage.src = `photos/${memory[0]}`;
       detailImage.alt = `Ruhita memory ${activeIndex + 1}`;
@@ -892,17 +1019,37 @@ You deserve a beautiful life filled with love, laughter, and magic. Today is all
 
       portal.classList.add("is-open");
       portal.setAttribute("aria-hidden", "false");
+
       document.body.classList.add("memory-portal-open");
-      portal.querySelector(".portal-close").focus();
+
+      portal.querySelector(".portal-close").focus({
+        preventScroll: true
+      });
     }
 
-    function closeMemory() {
+    function closeMemory(fromPopstate = false) {
+      if (!portal.classList.contains("is-open")) return;
+
       portal.classList.remove("is-open");
       portal.setAttribute("aria-hidden", "true");
+
       document.body.classList.remove("memory-portal-open");
 
       if (previousFocus && typeof previousFocus.focus === "function") {
-        previousFocus.focus();
+        previousFocus.focus({ preventScroll: true });
+      }
+
+      /*
+       * If the user closes with the X or backdrop, remove the
+       * gallery's history entry. If Back already triggered this
+       * function, do not call history.back() a second time.
+       */
+      if (portalHistoryActive) {
+        portalHistoryActive = false;
+
+        if (!fromPopstate) {
+          window.history.back();
+        }
       }
     }
 
@@ -913,10 +1060,10 @@ You deserve a beautiful life filled with love, laughter, and magic. Today is all
     });
 
     portal.querySelector(".portal-close")
-      .addEventListener("click", closeMemory);
+      .addEventListener("click", () => closeMemory());
 
     portal.querySelector(".portal-backdrop")
-      .addEventListener("click", closeMemory);
+      .addEventListener("click", () => closeMemory());
 
     portal.querySelector(".portal-prev").addEventListener("click", () => {
       openMemory(activeIndex - 1);
@@ -927,16 +1074,41 @@ You deserve a beautiful life filled with love, laughter, and magic. Today is all
     });
 
     portal.addEventListener("keydown", event => {
-      if (event.key === "Escape") closeMemory();
-      if (event.key === "ArrowLeft") openMemory(activeIndex - 1);
-      if (event.key === "ArrowRight") openMemory(activeIndex + 1);
+      if (event.key === "Escape") {
+        closeMemory();
+      }
+
+      if (event.key === "ArrowLeft") {
+        openMemory(activeIndex - 1);
+      }
+
+      if (event.key === "ArrowRight") {
+        openMemory(activeIndex + 1);
+      }
+    });
+
+    /*
+     * PHONE BACK BUTTON FIX:
+     * When the gallery is expanded and the browser goes back,
+     * close the photo overlay instead of leaving the website.
+     */
+    window.addEventListener("popstate", () => {
+      if (portal.classList.contains("is-open")) {
+        closeMemory(true);
+      }
     });
 
     gallery.querySelectorAll(".memory-universe img").forEach(img => {
       img.addEventListener("error", () => {
         img.classList.add("image-missing");
-        img.alt = "Photo unavailable — check the filename in the photos folder.";
-        console.warn("Photo failed to load:", img.getAttribute("src"));
+
+        img.alt =
+          "Photo unavailable — check the filename in the photos folder.";
+
+        console.warn(
+          "Photo failed to load:",
+          img.getAttribute("src")
+        );
       }, { once: true });
     });
   }
@@ -954,6 +1126,7 @@ You deserve a beautiful life filled with love, laughter, and magic. Today is all
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (!entry.isIntersecting) return;
+
         entry.target.classList.add("in-view");
         observer.unobserve(entry.target);
       });
@@ -977,11 +1150,15 @@ You deserve a beautiful life filled with love, laughter, and magic. Today is all
 
     for (let i = 0; i < count; i++) {
       const star = document.createElement("span");
+
       star.className = "gstar";
       star.textContent = Math.random() > 0.5 ? "✦" : "·";
+
       star.style.left = `${Math.random() * 100}%`;
       star.style.top = `${Math.random() * 100}%`;
+
       star.style.animationDelay = `${Math.random() * 3}s`;
+
       container.appendChild(star);
     }
   }
@@ -995,12 +1172,17 @@ You deserve a beautiful life filled with love, laughter, and magic. Today is all
     const maxScroll =
       document.documentElement.scrollHeight - window.innerHeight;
 
-    const progress = maxScroll > 0 ? window.scrollY / maxScroll : 0;
-    bar.style.width = `${Math.max(0, Math.min(100, progress * 100))}%`;
+    const progress = maxScroll > 0
+      ? window.scrollY / maxScroll
+      : 0;
+
+    bar.style.width =
+      `${Math.max(0, Math.min(100, progress * 100))}%`;
   }
 
   function handleScroll() {
     if (scrollPending) return;
+
     scrollPending = true;
 
     requestAnimationFrame(() => {
@@ -1022,19 +1204,28 @@ You deserve a beautiful life filled with love, laughter, and magic. Today is all
     $("envelope")?.classList.remove("open");
 
     const note = $("letterNote");
+
     if (note) {
       note.classList.remove("visible");
       note.setAttribute("aria-hidden", "true");
     }
 
-    if ($("typedLetter")) $("typedLetter").textContent = "";
+    if ($("typedLetter")) {
+      $("typedLetter").textContent = "";
+    }
 
-    $$(".candle").forEach(candle => candle.classList.remove("off"));
+    $$(".candle").forEach(candle => {
+      candle.classList.remove("off");
+    });
 
     const wish = $("wish");
-    if (wish) wish.textContent = "Blow gently into your microphone…";
+
+    if (wish) {
+      wish.textContent = "Blow gently into your microphone…";
+    }
 
     const birthday = $("birthday");
+
     if (birthday) {
       birthday.classList.remove("visible");
       birthday.setAttribute("aria-hidden", "true");
@@ -1043,7 +1234,10 @@ You deserve a beautiful life filled with love, laughter, and magic. Today is all
     $("cake")?.classList.remove("celebrating");
 
     desiredTrack = "opening";
-    if (musicEnabled && musicUnlocked) playTrack();
+
+    if (musicEnabled && musicUnlocked) {
+      playTrack();
+    }
 
     scrollToSection("intro");
     createHeartBurst(20);
@@ -1053,10 +1247,13 @@ You deserve a beautiful life filled with love, laughter, and magic. Today is all
 
   function bindEvents() {
     $("enter")?.addEventListener("click", () => {
-      if (!musicUnlocked || music?.paused) enableMusic();
+      if (!musicUnlocked || music?.paused) {
+        enableMusic();
+      }
 
       startFloatingHearts();
       createHeartBurst(15);
+
       scrollToSection("letter");
     });
 
@@ -1083,10 +1280,16 @@ You deserve a beautiful life filled with love, laughter, and magic. Today is all
     });
 
     $("restart")?.addEventListener("click", restartJourney);
+
     soundButton?.addEventListener("click", toggleMusic);
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    window.addEventListener("resize", updateProgress, { passive: true });
+    window.addEventListener("scroll", handleScroll, {
+      passive: true
+    });
+
+    window.addEventListener("resize", updateProgress, {
+      passive: true
+    });
   }
 
   /* START EVERYTHING */
@@ -1105,7 +1308,9 @@ You deserve a beautiful life filled with love, laughter, and magic. Today is all
   }
 
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", init, { once: true });
+    document.addEventListener("DOMContentLoaded", init, {
+      once: true
+    });
   } else {
     init();
   }
