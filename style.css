@@ -2371,10 +2371,12 @@ body.memory-portal-open {
 }
 
 /* Keep the photo viewer controls above the sound button */
-.memory-portal .memory-close,
-.memory-portal .memory-portal-close {
+
+/* FIX: Keep the photo close button visible */
+.memory-portal .portal-close {
   position: fixed !important;
   top: 80px !important;
   right: 18px !important;
-  z-index: 99999 !important;
+  z-index: 10001 !important;
 }
+
