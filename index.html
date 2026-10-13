@@ -1,0 +1,214 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#100b24">
+  <title>For Ruhita ✨</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=DM+Sans:wght@400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="cosmos" aria-hidden="true">
+    <canvas id="stars"></canvas>
+    <div class="nebula n1"></div>
+    <div class="nebula n2"></div>
+  </div>
+
+  <div class="progress"><span id="progressBar"></span></div>
+
+  <button class="sound" id="soundToggle" type="button" aria-label="Toggle music">
+    ♫ <small>SOUND OFF</small>
+  </button>
+
+   <audio id="music" src="music/river-flows-in-you.mp3" loop preload="auto"></audio>
+
+  <main>
+    <!-- 01: Magical opening -->
+    <section class="scene intro" id="intro">
+      <div class="orbit orbit1"></div>
+      <div class="orbit orbit2"></div>
+
+      <p class="eyebrow intro-eye">
+        ✦ &nbsp; A LITTLE UNIVERSE, MADE FOR YOU &nbsp; ✦
+      </p>
+
+      <div class="heart-stage">
+        <canvas id="heartCanvas"></canvas>
+        <div class="heart-glow"></div>
+      </div>
+
+      <div class="name">
+        <div class="ornament">✧ &nbsp; ✦ &nbsp; ✧</div>
+        <h1>RUHITA</h1>
+        <p>Some people make ordinary moments feel magical.</p>
+      </div>
+
+      <button class="magic" id="enter">
+        ENTER YOUR LITTLE UNIVERSE <b>✧</b>
+      </button>
+
+      <p class="hint">A little surprise is waiting <span>↓</span></p>
+      <div class="scene-tag">01 <i>/</i> A BEGINNING</div>
+    </section>
+
+    <!-- 02: Birthday letter -->
+    <section class="scene letter" id="letter">
+      <header class="heading reveal">
+        <p class="eyebrow">A NOTE, JUST FOR YOU</p>
+        <h2>Something from the heart<span>.</span></h2>
+        <p>A tiny pause in this little universe, just for you.</p>
+      </header>
+
+      <div class="letter-wrap reveal">
+        <button class="envelope" id="envelope" aria-label="Tap to open your birthday letter">
+          <div class="paper">
+            <small>FOR RUHITA</small>
+            <b>♡</b>
+            <em>open me</em>
+          </div>
+
+          <div class="env-back"></div>
+          <div class="env-left"></div>
+          <div class="env-right"></div>
+          <div class="env-flap"></div>
+          <div class="seal">♡</div>
+          <small class="env-caption">TAP TO OPEN YOUR LETTER</small>
+        </button>
+
+        <article class="letter-note" id="letterNote" aria-hidden="true">
+          <small class="eyebrow">MY WISH FOR YOU</small>
+          <p id="typedLetter"></p>
+          <div class="signoff">With lots of love &amp; a little chaos, ♡</div>
+          <button class="text-link" id="goCake">
+            There's one more thing <b>→</b>
+          </button>
+        </article>
+      </div>
+
+      <div class="scene-tag">02 <i>/</i> A LITTLE NOTE</div>
+    </section>
+
+    <!-- 03: Birthday cake -->
+    <section class="scene cake-scene" id="cake">
+      <header class="heading reveal">
+        <p class="eyebrow">CLOSE YOUR EYES, MAKE A WISH</p>
+        <h2>A little birthday magic<span>.</span></h2>
+        <p>Take a breath. Think of something wonderful.</p>
+      </header>
+
+      <div class="cake-stage reveal" id="cakeStage">
+        <div class="cake-glow"></div>
+
+        <div class="cake-art">
+          <div class="candles">
+            <div class="candle"><i></i><b></b></div>
+            <div class="candle"><i></i><b></b></div>
+            <div class="candle"><i></i><b></b></div>
+          </div>
+
+          <div class="icing"></div>
+          <div class="tier top-tier"></div>
+          <div class="tier bottom-tier">
+            <i></i><i></i><i></i><i></i>
+          </div>
+          <div class="plate"></div>
+        </div>
+
+        <p class="wish" id="wish">Blow gently into your microphone…</p>
+
+        <div class="actions">
+          <button class="magic small" id="makeWish">
+            MAKE A WISH <b>✧</b>
+          </button>
+          <button class="quiet" id="enableMic">Enable microphone</button>
+        </div>
+
+        <small class="mic-note" id="micNote">
+          Microphone is optional. The wish button always works.
+        </small>
+      </div>
+
+      <div class="birthday" id="birthday" aria-hidden="true">
+        <small class="eyebrow">TODAY, THE UNIVERSE CELEBRATES</small>
+        <h2>Happy Birthday</h2>
+        <p class="birthday-name">Ruhita ♡</p>
+        <p>May your next chapter be full of beautiful surprises.</p>
+        <button class="text-link" id="goMemories">
+          Let's look back at our little moments <b>→</b>
+        </button>
+      </div>
+
+      <div class="scene-tag">03 <i>/</i> MAKE A WISH</div>
+    </section>
+
+    <!-- 04: Photos -->
+    <section class="scene memories" id="memories">
+      <header class="heading reveal">
+        <p class="eyebrow">LITTLE MOMENTS, BIG FEELINGS</p>
+        <h2>Our little collection of chaos<span>.</span></h2>
+        <p>The everyday moments that became memories without asking.</p>
+      </header>
+
+      <div class="gallery" id="gallery"></div>
+
+      <div class="memories-end reveal">
+        <b>✦</b>
+        <p>And somehow, there's always another memory waiting to happen.</p>
+        <button class="text-link" id="goGalaxy">
+          One last little universe <b>→</b>
+        </button>
+      </div>
+
+      <div class="scene-tag">04 <i>/</i> OUR MEMORIES</div>
+    </section>
+
+    <!-- 05: Friendship galaxy -->
+    <section class="scene galaxy" id="galaxy">
+      <div class="galaxy-stars" id="galaxyStars"></div>
+
+      <div class="galaxy-content reveal">
+        <p class="eyebrow">SOME PEOPLE BECOME CONSTELLATIONS</p>
+        <div class="galaxy-heart">♡</div>
+        <h2>You're part of my universe.</h2>
+        <p>
+          For all the talks, the nonsense, the teasing, the laughs,
+          and the little moments that make an ordinary day better —
+          thank you for being you.
+        </p>
+        <button class="magic" id="goFinal">
+          ONE LAST THING <b>✧</b>
+        </button>
+      </div>
+
+      <div class="scene-tag">05 <i>/</i> OUR UNIVERSE</div>
+    </section>
+
+    <!-- 06: Final birthday wish -->
+    <section class="scene final" id="final">
+      <div class="final-content reveal">
+        <p class="eyebrow">THE WORLD IS LUCKY TO HAVE YOUR KIND OF CHAOS</p>
+        <div class="final-heart">♡</div>
+        <h2>Keep being<br><em>beautifully you.</em></h2>
+        <p class="signature">Happy Birthday, Ruhita.</p>
+        <p>
+          Here's to more nonsense, more laughter, and more memories
+          we haven't made yet.
+        </p>
+        <button class="restart" id="restart">
+          ↺ &nbsp; Start the little journey again
+        </button>
+      </div>
+
+      <div class="scene-tag">06 <i>/</i> ALWAYS A LITTLE MAGIC</div>
+    </section>
+  </main>
+
+  <div id="hearts" aria-hidden="true"></div>
+  <script src="script.js"></script>
+</body>
+</html>
