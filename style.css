@@ -2369,3 +2369,12 @@ body.memory-portal-open {
     height: 48vh;
   }
 }
+
+/* Keep the photo viewer controls above the sound button */
+.memory-portal .memory-close,
+.memory-portal .memory-portal-close {
+  position: fixed !important;
+  top: 80px !important;
+  right: 18px !important;
+  z-index: 99999 !important;
+}
